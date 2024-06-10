@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>View User Details</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div class="navbar">
+      <a href="index.html" class="active">New User Entry</a>
+      <a href="view-users.html">View User Details</a>
+    </div>
+    <!-- <div class="header">
+      <img src="https://via.placeholder.com/900x200" alt="Header Image" />
+    </div> -->
+    <div class="box">
+      <h2>User Details</h2>
+      <div class="filter-container">
+        <label for="isEnteredFilter">Is Entered:</label>
+        <select id="isEnteredFilter">
+          <option value="">All</option>
+          <option value="true">True</option>
+          <option value="false">False</option>
+        </select>
+        <label for="sevaFilter">Seva:</label>
+        <select id="sevaFilter">
+          <option value="">All</option>
+          <option value="Seva-1">Seva-1</option>
+          <option value="Seva-2">Seva-2</option>
+          <option value="Seva-3">Seva-3</option>
+          <option value="Seva-4">Seva-4</option>
+        </select>
+        <label for="searchField">Search:</label>
+        <input
+          type="text"
+          id="searchField"
+          placeholder="Search by Receipt Number, Name, Phone Number"
+        />
+        <button id="displayDetails">Display All User Details</button>
+      </div>
+      <table id="userDetailsTable">
+        <thead>
+          <tr>
+            <th>Receipt Number</th>
+            <th>Name</th>
+            <th>Phone Number</th>
+            <th>Seva</th>
+            <th>Is Entered</th>
+          </tr>
+        </thead>
+        <tbody></tbody>
+      </table>
+    </div>
+    <div class="footer">
+      <p>
+        &copy; Developed and Deployed by SRI SATYA SATTI. All Rights Reserved.
+      </p>
+    </div>
+    <script type="module">
+      import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+      import {
+        getDatabase,
+        ref,
+        get,
+        update,
+      } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
+
+      const firebaseConfig = {
+        apiKey: "AIzaSyDdl_c6FJ10kDx2ymZWXy9rZeVLzZemBzw",
+        authDomain: "user-management-90bb2.firebaseapp.com",
+        projectId: "user-management-90bb2",
+        storageBucket: "user-management-90bb2.appspot.com",
+        messagingSenderId: "592910119723",
+        appId: "1:592910119723:web:b82471a4e2db985d8a8b6e",
+        measurementId: "G-BLMTZW2PEY",
+      };
+
+      const app = initializeApp(firebaseConfig);
+      const db = getDatabase(app);
+
+      document
+        .getElementById("displayDetails")
+        .addEventListener("click", function () {
+          const userDetailsRef = ref(db, "user/");
+          get(userDetailsRef)
+            .then((snapshot) => {
+              if (snapshot.exists()) {
+                const userDetails = snapshot.val();
+                displayUserDetails(userDetails);
+              } else {
+                alert("No user details found");
+              }
+            })
+            .catch((error) => {
+              console.error("Error getting user details: ", error);
+            });
+        });
+
+      function displayUserDetails(userDetails) {
+        const tableBody = document.querySelector("#userDetailsTable tbody");
+        tableBody.innerHTML = ""; // Clear existing data
+        const isEnteredFilter =
+          document.getElementById("isEnteredFilter").value;
+        const sevaFilter = document.getElementById("sevaFilter").value;
+        const searchField = document
+          .getElementById("searchField")
+          .value.toLowerCase();
+
+        for (const userId in userDetails) {
+          const userData = userDetails[userId];
+          let showRow = true;
+
+          if (
+            isEnteredFilter &&
+            String(userData.IsEntered) !== isEnteredFilter
+          ) {
+            showRow = false;
+          }
+
+          if (sevaFilter && userData.seva !== sevaFilter) {
+            showRow = false;
+          }
+
+          if (
+            searchField &&
+            !(
+              userData.receiptNumber.toLowerCase().includes(searchField) ||
+              userData.name.toLowerCase().includes(searchField) ||
+              userData.phoneNumber.toLowerCase().includes(searchField)
+            )
+          ) {
+            showRow = false;
+          }
+
+          if (showRow) {
+            const row = document.createElement("tr");
+            row.innerHTML = `
+                        <td>${userData.receiptNumber}</td>
+                        <td>${userData.name}</td>
+                        <td>${userData.phoneNumber}</td>
+                        <td>${userData.seva}</td>
+                        <td><button class="${
+                          userData.IsEntered ? "btn-true" : "btn-false"
+                        }" onclick="toggleIsEntered('${userId}', ${
+              userData.IsEntered
+            })">${userData.IsEntered}</button></td>
+                    `;
+            tableBody.appendChild(row);
+          }
+        }
+      }
+
+      window.toggleIsEntered = function (userId, currentValue) {
+        const userRef = ref(db, "user/" + userId);
+        update(userRef, { IsEntered: !currentValue })
+          .then(() => {
+            document.getElementById("displayDetails").click();
+          })
+          .catch((error) => {
+            console.error("Error updating IsEntered: ", error);
+          });
+      };
+    </script>
+  </body>
+</html>

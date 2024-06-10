@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>New User Entry</title>
+    <link rel="stylesheet" href="navbar.css" />
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div class="navbar">
+      <a href="index.html" class="active">New User Entry</a>
+      <a href="view-users.html">View User Details</a>
+    </div>
+    <div class="box">
+      <h2>New User Entry</h2>
+      <div class="form-group">
+        <label for="receiptNumber">Receipt Number:</label>
+        <input
+          type="text"
+          id="receiptNumber"
+          placeholder="Enter receipt number"
+        />
+      </div>
+      <div class="form-group">
+        <label for="name">Name:</label>
+        <input type="text" id="name" placeholder="Enter name" />
+      </div>
+      <div class="form-group">
+        <label for="phoneNumber">Phone Number:</label>
+        <input type="text" id="phoneNumber" placeholder="Enter phone number" />
+      </div>
+      <div class="form-group">
+        <label for="seva">Seva:</label>
+        <select id="seva">
+          <option value="Seva-1">Seva-1</option>
+          <option value="Seva-2">Seva-2</option>
+          <option value="Seva-3">Seva-3</option>
+          <option value="Seva-4">Seva-4</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label for="isEntered">Is Entered:</label>
+        <select id="isEntered">
+          <option value="true">True</option>
+          <option value="false">False</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <button id="submitUser">Submit</button>
+      </div>
+    </div>
+    <div class="footer">
+      <p>
+        &copy; Developed and Deployed by SRI SATYA SATTI. All Rights Reserved.
+      </p>
+    </div>
+    <script type="module">
+      import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+      import {
+        getDatabase,
+        ref,
+        set,
+      } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
+
+      const firebaseConfig = {
+        apiKey: "AIzaSyDdl_c6FJ10kDx2ymZWXy9rZeVLzZemBzw",
+        authDomain: "user-management-90bb2.firebaseapp.com",
+        projectId: "user-management-90bb2",
+        storageBucket: "user-management-90bb2.appspot.com",
+        messagingSenderId: "592910119723",
+        appId: "1:592910119723:web:b82471a4e2db985d8a8b6e",
+        measurementId: "G-BLMTZW2PEY",
+      };
+
+      const app = initializeApp(firebaseConfig);
+      const db = getDatabase(app);
+
+      document
+        .getElementById("submitUser")
+        .addEventListener("click", function () {
+          const receiptNumber = document.getElementById("receiptNumber").value;
+          const name = document.getElementById("name").value;
+          const phoneNumber = document.getElementById("phoneNumber").value;
+          const seva = document.getElementById("seva").value;
+          const isEntered = document.getElementById("isEntered").value;
+
+          if (receiptNumber && name && phoneNumber && seva) {
+            const userRef = ref(db, "user/" + receiptNumber);
+            set(userRef, {
+              receiptNumber,
+              name,
+              phoneNumber,
+              seva,
+              IsEntered: isEntered === "true",
+            })
+              .then(() => {
+                alert("User details saved successfully!");
+              })
+              .catch((error) => {
+                console.error("Error saving user details: ", error);
+              });
+          } else {
+            alert("Please fill in all fields.");
+          }
+        });
+    </script>
+  </body>
+</html>
