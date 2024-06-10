@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Search User Details by Receipt Number</title>
+    <link rel="stylesheet" href="style.css" />
+    <style>
+      .toggle-button {
+        padding: 5px 10px;
+        border: none;
+        cursor: pointer;
+        color: white;
+        border-radius: 5px;
+      }
+      .toggle-button.true {
+        background-color: green;
+      }
+      .toggle-button.false {
+        background-color: red;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="navbar">
+      <a href="index.html" class="active">New User Entry</a>
+      <a href="view-users.html">View User Details</a>
+      <a href="Entry.html">Entry</a>
+    </div>
+    <div class="search-container">
+      <label for="searchField">Search by Receipt Number:</label>
+      <input type="text" id="searchField" placeholder="Enter Receipt Number" />
+      <button id="searchButton">Search</button>
+    </div>
+    <div id="userDataContainer" class="box" style="display: none">
+      <h2>User Details</h2>
+      <table id="userDetailsTable">
+        <thead>
+          <tr>
+            <th>Receipt Number</th>
+            <th>Name</th>
+            <th>Phone Number</th>
+            <th>Seva</th>
+            <th>Is Entered</th>
+          </tr>
+        </thead>
+        <tbody id="userDetailsBody"></tbody>
+      </table>
+    </div>
+    <div id="noDataMessage" class="box" style="display: none">
+      <h2>No Data Available</h2>
+    </div>
+    <script type="module">
+      import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+      import {
+        getDatabase,
+        ref,
+        get,
+        update,
+      } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
+
+      const firebaseConfig = {
+        apiKey: "AIzaSyDdl_c6FJ10kDx2ymZWXy9rZeVLzZemBzw",
+        authDomain: "user-management-90bb2.firebaseapp.com",
+        projectId: "user-management-90bb2",
+        storageBucket: "user-management-90bb2.appspot.com",
+        messagingSenderId: "592910119723",
+        appId: "1:592910119723:web:b82471a4e2db985d8a8b6e",
+        measurementId: "G-BLMTZW2PEY",
+      };
+
+      const app = initializeApp(firebaseConfig);
+      const db = getDatabase(app);
+
+      document
+        .getElementById("searchButton")
+        .addEventListener("click", function () {
+          const receiptNumber = document
+            .getElementById("searchField")
+            .value.trim();
+          if (receiptNumber !== "") {
+            searchUserByReceiptNumber(receiptNumber);
+          }
+        });
+
+      function searchUserByReceiptNumber(receiptNumber) {
+        const userDetailsRef = ref(db, "user/");
+        get(userDetailsRef)
+          .then((snapshot) => {
+            if (snapshot.exists()) {
+              const userDetails = snapshot.val();
+              const userData = userDetails[receiptNumber];
+              if (userData) {
+                displayUserDetails(userData);
+              } else {
+                document.getElementById("noDataMessage").style.display =
+                  "block";
+                document.getElementById("userDataContainer").style.display =
+                  "none";
+              }
+            } else {
+              alert("No user details found");
+            }
+          })
+          .catch((error) => {
+            console.error("Error getting user details: ", error);
+          });
+      }
+
+      function displayUserDetails(userData) {
+        const userDetailsBody = document.getElementById("userDetailsBody");
+        userDetailsBody.innerHTML = ""; // Clear existing data
+        const row = document.createElement("tr");
+        row.innerHTML = `
+          <td>${userData.receiptNumber}</td>
+          <td>${userData.name}</td>
+          <td>${userData.phoneNumber}</td>
+          <td class="seva-highlight">${userData.seva}</td>
+          <td>
+            <button class="toggle-button ${
+              userData.IsEntered ? "true" : "false"
+            }" onclick="toggleIsEntered('${userData.receiptNumber}', ${
+          userData.IsEntered
+        })">
+              ${userData.IsEntered ? "Entered" : "Not Entered"}
+            </button>
+          </td>
+        `;
+        userDetailsBody.appendChild(row);
+        document.getElementById("noDataMessage").style.display = "none";
+        document.getElementById("userDataContainer").style.display = "block";
+      }
+
+      window.toggleIsEntered = function (receiptNumber, currentValue) {
+        const userRef = ref(db, "user/" + receiptNumber);
+        update(userRef, { IsEntered: !currentValue })
+          .then(() => {
+            searchUserByReceiptNumber(receiptNumber); // Refresh user details after toggling
+          })
+          .catch((error) => {
+            console.error("Error updating IsEntered: ", error);
+          });
+      };
+    </script>
+  </body>
+</html>
