@@ -8,6 +8,7 @@
     <div class="navbar">
       <a href="index.html" class="active">New User Entry</a>
       <a href="view-users.html">View User Details</a>
+      <a href="Entry.html">Entry</a>
     </div>
     <!-- <div class="header">
       <img src="https://via.placeholder.com/900x200" alt="Header Image" />
@@ -15,12 +16,6 @@
     <div class="box">
       <h2>User Details</h2>
       <div class="filter-container">
-        <label for="isEnteredFilter">Is Entered:</label>
-        <select id="isEnteredFilter">
-          <option value="">All</option>
-          <option value="true">True</option>
-          <option value="false">False</option>
-        </select>
         <label for="sevaFilter">Seva:</label>
         <select id="sevaFilter">
           <option value="">All</option>
@@ -30,11 +25,7 @@
           <option value="Seva-4">Seva-4</option>
         </select>
         <label for="searchField">Search:</label>
-        <input
-          type="text"
-          id="searchField"
-          placeholder="Search by Receipt Number, Name, Phone Number"
-        />
+        <input type="text" id="searchField" placeholder="Search" />
         <button id="displayDetails">Display All User Details</button>
       </div>
       <table id="userDetailsTable">
@@ -44,17 +35,16 @@
             <th>Name</th>
             <th>Phone Number</th>
             <th>Seva</th>
-            <th>Is Entered</th>
           </tr>
         </thead>
         <tbody></tbody>
       </table>
     </div>
-    <div class="footer">
+    <!-- <div class="footer">
       <p>
         &copy; Developed and Deployed by SRI SATYA SATTI. All Rights Reserved.
       </p>
-    </div>
+    </div> -->
     <script type="module">
       import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
       import {
@@ -98,8 +88,7 @@
       function displayUserDetails(userDetails) {
         const tableBody = document.querySelector("#userDetailsTable tbody");
         tableBody.innerHTML = ""; // Clear existing data
-        const isEnteredFilter =
-          document.getElementById("isEnteredFilter").value;
+        const isEnteredFilter = "";
         const sevaFilter = document.getElementById("sevaFilter").value;
         const searchField = document
           .getElementById("searchField")
@@ -120,14 +109,7 @@
             showRow = false;
           }
 
-          if (
-            searchField &&
-            !(
-              userData.receiptNumber.toLowerCase().includes(searchField) ||
-              userData.name.toLowerCase().includes(searchField) ||
-              userData.phoneNumber.toLowerCase().includes(searchField)
-            )
-          ) {
+          if (searchField && userData.receiptNumber != searchField) {
             showRow = false;
           }
 
@@ -137,12 +119,7 @@
                         <td>${userData.receiptNumber}</td>
                         <td>${userData.name}</td>
                         <td>${userData.phoneNumber}</td>
-                        <td>${userData.seva}</td>
-                        <td><button class="${
-                          userData.IsEntered ? "btn-true" : "btn-false"
-                        }" onclick="toggleIsEntered('${userId}', ${
-              userData.IsEntered
-            })">${userData.IsEntered}</button></td>
+                        <td>${userData.seva}</td>  
                     `;
             tableBody.appendChild(row);
           }
