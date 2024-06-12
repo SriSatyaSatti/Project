@@ -20,16 +20,35 @@
     </style>
   </head>
   <body>
+    <header>
+      <div class="header-container">
+        <img
+          src="https://th.bing.com/th/id/R.ebbc02801cc82d17032ec14de0dd1dac?rik=Wi%2fBrXsJ1JSQ1g&riu=http%3a%3awww.oneindia.com%2fimg%2f2016%2f09%2fiskcon-logo-21-1474442080.jpg&ehk=C3ZETcZ%2fjOv9UzUBXcxhzH5h10zs5%bQxSRb6gQOZgso%3d&risl=&pid=ImgRaw&r=0"
+          alt="Website Logo"
+          height="70"
+          width="80"
+        />
+        <h1>International Society for Krishna Consciousness</h1>
+      </div>
+    </header>
     <div class="navbar">
       <a href="index.html" class="active">New User Entry</a>
       <a href="view-users.html">View User Details</a>
       <a href="Entry.html">Entry</a>
     </div>
-    <div class="search-container">
-      <label for="searchField">Search by Receipt Number:</label>
-      <input type="text" id="searchField" placeholder="Enter Receipt Number" />
-      <button id="searchButton">Search</button>
-    </div>
+    <h1>.</h1>
+    <h2>.</h2>
+    <center>
+      <div class="search-container">
+        <label for="searchField">Search by Receipt Number:</label>
+        <input
+          type="text"
+          id="searchField"
+          placeholder="Enter Receipt Number"
+        />
+        <button id="searchButton">Search</button>
+      </div>
+    </center>
     <div id="userDataContainer" class="box" style="display: none">
       <h2>User Details</h2>
       <table id="userDetailsTable">
@@ -48,6 +67,8 @@
     <div id="noDataMessage" class="box" style="display: none">
       <h2>No Data Available</h2>
     </div>
+    <h1>.</h1>
+    <h2>.</h2>
     <script type="module">
       import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
       import {
@@ -131,13 +152,14 @@
 
       window.toggleIsEntered = function (receiptNumber, currentValue) {
         const userRef = ref(db, "user/" + receiptNumber);
-        update(userRef, { IsEntered: !currentValue })
-          .then(() => {
-            searchUserByReceiptNumber(receiptNumber); // Refresh user details after toggling
-          })
-          .catch((error) => {
-            console.error("Error updating IsEntered: ", error);
-          });
+        if (currentValue != true)
+          update(userRef, { IsEntered: !currentValue })
+            .then(() => {
+              searchUserByReceiptNumber(receiptNumber); // Refresh user details after toggling
+            })
+            .catch((error) => {
+              console.error("Error updating IsEntered: ", error);
+            });
       };
     </script>
   </body>
