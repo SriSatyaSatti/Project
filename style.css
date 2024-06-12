@@ -1,238 +1,198 @@
 /* Reset some default styles */
-body, html {
-    margin: 0;
-    padding: 0;
-    font-family: Arial, sans-serif;
+body,
+html {
+  margin: 0;
+  padding: 0;
+  font-family: Arial, sans-serif;
 }
 
 /* Navigation Bar */
 .navbar {
-    background-color: #333;
-    overflow: hidden;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  background-color: #cdca2d; /* Light cream color */
+  overflow: hidden;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  margin-top: 1%;
 }
 
 .navbar a {
-    float: left;
-    display: block;
-    color: #f2f2f2;
-    text-align: center;
-    padding: 14px 20px;
-    text-decoration: none;
-    transition: background-color 0.3s, color 0.3s;
+  float: left;
+  display: block;
+  color: #222; /* Deep brown color */
+  text-align: center;
+  padding: 14px 20px;
+  text-decoration: none;
+  transition: background-color 0.3s, color 0.3s;
 }
 
 .navbar a:hover {
-    background-color: #ddd;
-    color: black;
+  background-color: #f0e68c; /* Light golden yellow color */
+  color: black;
 }
-
-
 
 /* Media query for mobile devices */
 @media screen and (max-width: 600px) {
-    .navbar a {
-        float: none;
-        width: 100%;
-    }
+  .navbar a {
+    float: none;
+    width: 100%;
+  }
 }
 
 /* General Styling */
 body {
-    background-color: #f4f4f9;
-}
+    background-image: url("https://th.bing.com/th/id/R.ec3bda53dc09797a84251356512cbd63?rik=%2fzi0uaSnwsRtUQ&riu=http%3a%2f%2fimage3.mouthshut.com%2fimages%2fimagesp%2f925752496s.jpg&ehk=toLEHBfr%2bxKmi30ozQAdprKW0EgHZCjW6nXh%2bOT0O8I%3d&risl=&pid=ImgRaw&r=0"); /* Replace with your image path */
+    background-size: cover; /* This resizes the image to cover the entire viewport */
+    background-position: center; /* This centers the image horizontally and vertically */
+    background-repeat: no-repeat; /* This prevents the image from repeating */
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+  }
+  
 
 .box {
-    max-width: 900px;
-    margin: 50px auto;
-    padding: 20px;
-    background: white;
-    border-radius: 8px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  max-width: 600px;
+  margin: 30px auto;
+  padding: 20px;
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  opacity: 0.8;
 }
-
+h1{
+    display: inline-table;
+    padding-left: 1%;
+}
 h2 {
-    text-align: center;
-    color: #333;
+  text-align: center;
+  color: #333; /* Dark gray for headings */
 }
-
 /* Form Styling */
 .form-group {
-    margin-bottom: 15px;
+  margin-bottom: 15px;
 }
 
 .form-group label {
-    display: block;
-    margin-bottom: 5px;
-    color: #333;
+  display: block;
+  margin-bottom: 5px;
+  color: #333;
 }
 
 .form-group input,
 .form-group select {
-    width: 100%;
-    padding: 8px;
-    box-sizing: border-box;
-    border: 1px solid #ccc;
-    border-radius: 4px;
+  width: 100%;
+  padding: 8px;
+  box-sizing: border-box;
+  border: 1px solid #ccc;
+  border-radius: 4px;
 }
 
-.form-group button {
-    background-color: #4CAF50;
-    color: white;
-    border: none;
-    padding: 10px 20px;
-    border-radius: 4px;
-    cursor: pointer;
+ button {
+  background-color: #cfcfcf; /* Light cream color for buttons */
+  color: #222; /* Deep brown color for button text */
+  border: none;
+  padding: 10px 20px;
+  border-radius: 4px;
+  cursor: pointer;
 }
 
-.form-group button:hover {
-    background-color: #45a049;
+button:hover {
+  background-color: #f0e68c; /* Light golden yellow color on hover */
+  color: black;
 }
 
 /* Table Styling */
+/* Omitted for brevity - can be included from previous code */
 table {
     width: 100%;
     border-collapse: collapse;
     margin-top: 20px;
-}
-
-table, th, td {
+    }
+    
+    table, th, td {
     border: 1px solid #ddd;
-}
-
-th, td {
+    }
+    
+    th, td {
     padding: 12px;
     text-align: left;
-}
-
-th {
+    }
+    
+    th {
     background-color: #4CAF50;
     color: white;
-}
-
-tr:nth-child(even) {
+    }
+    
+    tr:nth-child(even) {
     background-color: #f2f2f2;
-}
-
-tr:hover {
+    }
+    
+    tr:hover {
     background-color: #ddd;
-}
-
+    }
+    .search-container{
+        margin-top: 1%;
+        background-color: #ddd;
+        padding: 2%;
+        width: 40%;
+        border-radius: 10px;
+    }
+    .search-container input{
+      border-radius: 2px;
+      height: 30px;
+      width: 180px;
+    }
 /* Button Styling */
 .btn-false {
-    background-color: red;
-    color: white;
-    border: none;
-    padding: 5px 10px;
-    border-radius: 5px;
-    cursor: pointer;
+  background-color: red;
+  color: white;
+  border: none;
+  padding: 5px 10px;
+  border-radius: 5px;
+  cursor: pointer;
 }
 
 .btn-true {
-    background-color: green;
-    color: white;
-    border: none;
-    padding: 5px 10px;
-    border-radius: 5px;
-    cursor: pointer;
+  background-color: green;
+  color: white;
+  border: none;
+  padding: 5px 10px;
+  border-radius: 5px;
+  cursor: pointer;
 }
 
 /* Footer Styling */
 .footer {
-    background-color: #333;
-    color: white;
-    text-align: center;
-    padding: 10px 0;
-    position: fixed;
-    bottom: 0;
-    width: 100%;
+  background-color: #cfcfcf; /* Light cream color */
+  color: #222; /* Deep brown color */
+  text-align: center;
+  padding: 10px 0;
+  position: fixed;
+  bottom: 0;
+  width: 100%;
 }
-
-/* Header Image Styling */
-.header img {
-    width: 100%;
-    height: 180px;
-    object-fit: cover;
+.header-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 70px; /* Match image height */
+  }
+  
+.header-container img{
+    margin-top: 2%;
+    padding-bottom: 1%;
 }
-
 /* Filter Container Styling */
 .filter-container {
-    display: flex;
-    justify-content: space-between;
-    margin-bottom: 20px;
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 20px;
 }
 
 .filter-container label,
 .filter-container select,
 .filter-container input,
 .filter-container button {
-    margin: 5px;
+  margin: 5px;
 }
-/* Add your existing CSS styles here */
 
-.navbar {
-    background-color: #333;
-    overflow: hidden;
-  }
-  
-  .navbar a {
-    float: left;
-    display: block;
-    color: white;
-    text-align: center;
-    padding: 14px 20px;
-    text-decoration: none;
-  }
-  
-  .navbar a:hover {
-    background-color: #ddd;
-    color: black;
-  }
-  
-  
-  .search-container {
-    margin: 20px;
-    padding: 20px;
-    border: 1px solid #ccc;
-    border-radius: 10px;
-    background-color: #f9f9f9;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-  }
-  
-  .search-container label {
-    margin-right: 10px;
-    font-size: 1.2em;
-  }
-  
-  .search-container input[type="text"] {
-    flex-grow: 1;
-    padding: 10px;
-    margin-right: 10px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    font-size: 1em;
-  }
-  
-  .search-container button {
-    padding: 10px 20px;
-    background-color: #4caf50;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    font-size: 1em;
-  }
-  
-  .search-container button:hover {
-    background-color: #45a049;
-  }
-  
-  .seva-highlight {
-    background-color: #ffeb3b;
-    padding: 5px 10px;
-    border-radius: 5px;
-    font-weight: bold;
-  }
-  
+/* Style the header
